@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="https://use.typekit.net/txy5jpc.css" />
+      <style>
+        body {
+          margin: 0px;
+          font-family: sans-serif;
+          font-size: 14px;
+          color: #222222;
+        }
+
+        .banner {
+          box-sizing: border-box;
+          width: 100%;
+          height: 300px;
+          border-radius: 8px;
+          padding: 15px;
+          border: 1px solid #777777;
+          background-image: url('https://i.ibb.co/VTs3Wg9/BG-8-2.png');
+          position: relative;
+        }
+
+        h1 {
+          margin: 10px 5px 10px 10px;
+          font-size: 18px;
+          font-weight: 600;
+        }
+
+        .label {
+          font-size: 13px;
+          font-weight: 600;
+        }
+
+        .pet-type-container,
+        .name-bday-container,
+        .checkbox-container {
+          margin-top: 3px;
+          margin-bottom: 10px;
+        }
+
+        .pet-name-input {
+          width: 110px;
+        }
+
+        .pet-bday-input {
+          width: 110px;
+        }
+
+        .pet-name-input,
+        .pet-bday-input {
+          height: 30px;
+          padding: 0 6px;
+          font-size: 14px;
+          border: 1px solid #777777;
+          border-radius: 4px;
+        }
+
+        .checkbox-container {
+          font-size: 13px;
+        }
+
+        .submit-button {
+          width: 105px;
+          height: 40px;
+          background: #222222;
+          border: 0;
+          border-radius: 20px;
+          font-size: 14px;
+          font-weight: 600;
+          color: white;
+          cursor: pointer;
+          transition: all 0.15s ease;
+        }
+
+        .submit-button:hover {
+          background-color: black;
+        }
+
+        #page-2 p {
+          margin: 10px 0;
+        }
+
+        .promo-code-container {
+          display: flex;
+          align-items: center;
+          border: 1px solid #999999;
+          margin: 10px 20px;
+          padding: 5px;
+          padding-left: 10px;
+          border-radius: 6px;
+        }
+
+        #promo-code {
+          font-size: 16px;
+          font-weight: 600;
+          flex: 1;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        #copy-button {
+          margin-left: 10px;
+          background-color: white;
+          border: 1px solid #777777;
+          border-radius: 4px;
+          padding: 5px 10px;
+          font-size: 14px;
+          color: #222222;
+          cursor: pointer;
+          transition: all 0.15s ease;
+        }
+
+        #copy-button:hover {
+          color: black;
+          border-color: #222222;
+        }
+
+        .validity {
+          color: #777777;
+          font-size: 13px;
+          font-style: italic;
+        }
+
+        .img-container {
+          display: flex;
+          align-items: flex-end;
+          width: 100%;
+          position: absolute;
+          left: 0%;
+          bottom:11px;
+        }
+
+        .animal-img {
+          flex: 1;
+          width: 50%;
+          height: auto;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="banner">
+        <div id="page-1">
+          <h1>
+            Informasi apa yang lebih menarik buat kamu?
+          </h1>
+          
+          <div class="img-container">
+            <img class="vira-img" src="https://i.ibb.co/fXFZgDC/VIRA-1-8-3.png" alt="Rumah" />
+          </div>
+
+          <form id="pet-form" onsubmit="submitForm(event)">
+            <div class="pet-type-container">
+              <label>
+                <input type="radio" name="petType" value="dog" required />
+                Rumah</label
+              >
+              <label>
+                <input type="radio" name="petType" value="cat" required />
+                Mobil/Motor</label
+              >
+              <label>
+                <input type="radio" name="petType" value="other" required />
+                Promo Terkini</label
+              >
+            </div>
+          </form>
+        </div>
+
+        <div id="page-2" style="display: none">
+          <h1>Jadi yang pertama tau informasi dan promonya dengan mengisi email kamu di bawah ini.</h1>
+
+            <div class="checkbox-container">
+              <label>
+                <input type="checkbox" name="consent" required />
+
+                Dengan mengisi data ini, saya setuju dan bersedia menerima informasi dan promo dari BCA. 
+              </label>
+            </div>
+            
+            <div class="name-bday-container">
+              <input class="pet-name-input" type="text" name="email" placeholder="Email" required />
+            </div>
+
+            <button class="submit-button">Submit</button>
+
+          <div class="img-container">
+            <img class="vira-img" src="https://i.ibb.co/f2MHkqT/VIRA-1-8-2.png" alt="Rumah" />
+          </div>
+        </div>
+      </div>
+
+      <script>
+        function copyText() {
+          var promoCodeEl = document.getElementById("promo-code")
+          document.getSelection().selectAllChildren(promoCodeEl)
+          document.execCommand("copy")
+          document.getSelection().removeAllRanges()
+          document.getElementById("copy-button").textContent = "Copied ✅"
+        }
+
+        function submitForm(event) {
+          event.preventDefault()
+
+          document.getElementById("page-1").style = "display: none"
+          document.getElementById("page-2").style = ""
+
+          var form = event.target
+          var data = {
+            name: form.petName.value,
+            birthday: form.petBirthday.value,
+            type: form.petType.value,
+          }
+
+          if (window.parent && window.parent.MeiroEvents) {
+            var bannerID = window.parent.MeiroEvents.getWebBannerId()
+            var responses = window.parent.MeiroEvents.getWebBannerHttpResponses(bannerID)
+            var promoCode = responses[0].data.promo_code
+
+            document.getElementById("promo-code").textContent = promoCode
+
+            var payload = {
+              action: "web_banner_submit",
+              banner_id: window.frameElement.getAttribute("data-bannerid"),
+              data: data,
+            }
+
+            window.parent.MeiroEvents.track("custom_event", payload)
+          }
+        }
+      </script>
+    </body>
+  </html>
